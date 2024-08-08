@@ -1,0 +1,24 @@
+[PROJECT]
+Target=PF.hex
+Processor_Text=PIC16F887
+CCSVerions=5.015
+Compiler=PCM
+CCSVersion=5.015
+[Target Data]
+FileList=PF.c
+[Directories]
+Include=C:\Program Files (x86)\PICC\Devices\;C:\Program Files (x86)\PICC\Drivers\
+[C:\Users\Usuario\Documents\Septimo semestre\micro  controladores y procesadores-materia\proyecto final\PF]
+Type=4
+[mru-list]
+1=PF.c
+[Opened Files]
+1=PF.c
+2=pruebas.c
+3=PF.h
+4=
+[PF.c]
+Type=4
+[Units]
+Count=1
+1=PF (main)

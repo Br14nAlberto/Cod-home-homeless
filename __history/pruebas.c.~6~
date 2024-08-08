@@ -1,0 +1,45 @@
+#include <16F877A.h>
+#device adc=10                      //Convesor analógico digital de 10 bits de resolución 
+#fuses XT, NOWDT, PUT, NOLVP, NOPROTECT //Activamos Bits de configuración
+#use delay(clock=4000000)           //Oscilador de Cristal 4MHz
+#include <lcd420.c>                 //Incluimos la libreria LCD 4x20
+#use standard_io(d)
+
+
+//****************Variables a utilizar****************//
+float valor;                        //Declaramos una variable de tipo float llamada "valor"                   
+float humedad;                      //Declaramos una variable de tipo float llamada "humedad"
+
+
+//****************Función de configuración****************//
+void configuracion (void)
+{
+   set_tris_a(0b00000001);          //Configuramos el pin RA0 de puerto A como entrada
+   setup_adc_ports(all_analog);     //Configuramos los pines de puerto A como entradas analógicas     
+   setup_adc(adc_clock_internal);   //Activamos el reloj interno ADC
+   //lcd_init();                      //Inicializamos libreria LCD4x20
+   //lcd_putc('\f');                  //Limpiamos pantalla LCD
+   //lcd_gotoxy(5,1);                 //Ubicamos el cursos en la columna 5, fila 1
+   //printf(lcd_putc,"Jorge APC");    //Escribimos una cadena de caracteres
+   //lcd_gotoxy(4,2);                 //Ubicamos el cursos en la columna 4, fila 2 
+   //printf(lcd_putc,"Sensor FC-28"); //Escribimos una cadea de caracteres
+   //delay_ms(50);                    //Retardo de 50 milisegundos
+}
+
+//****************Función Principal****************//
+void main (void)
+{
+   //configuracion();                 //Llamamos a la función de configuración
+   while(true)
+   {
+      set_adc_channel(0);           //Establecemos el canal 0 PIN RA0 como canal Analógico
+      delay_ms(1);                  //Retardo de 1 milisegundo
+      valor=read_adc();             //Guardamos el valor analógico digitalizado en la variable "valor"
+      humedad=(-0.17*valor)+171.4;  //Usamos esta fórmula para calcular el porcentaje de humedad
+      lcd_gotoxy(4,3);              //Ubicamos el curss en la columna 4, fila 3
+      printf(lcd_putc,"Humedad: %f", humedad);
+      lcd_gotoxy(4,4);
+      printf(lcd_putc,"Valor: %f", valor);
+      delay_ms(300);                //Retardo de 300 milisegundos 
+   }
+}
